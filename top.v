@@ -17,87 +17,117 @@
  *
  */
 
-module top (
-    input clk,
+ module top (
+  input clk,
 
-    output tx,
-    input  rx,
+  output tx,
+  input  rx,
 
-    input  [3:0] sw,
-    output [3:0] led
+  input  [3:0] sw,    // 4 switches físicos
+  output [3:0] led    // 4 LEDs físicos
 );
 
-  wire clk_bufg;
-  // BUFG bufg (
-  //     .I(clk),
-  //     .O(clk_bufg)
-  // );
-  bufg_opt bufg (
-    .dat_in(clk),
-    .dat_out(clk_bufg)
-  );
+// Clock buffer (puedes usar BUFG si quieres)
+wire clk_bufg;
+bufg_opt bufg (
+  .dat_in(clk),
+  .dat_out(clk_bufg)
+);
 
-  reg [5:0] reset_cnt = 0;
-  wire resetn = &reset_cnt;
+// Power-on reset counter
+reg [5:0] reset_cnt = 0;
+wire resetn = &reset_cnt;
 
-  always @(posedge clk_bufg) begin
-    reset_cnt <= reset_cnt + !resetn;
-  end
+always @(posedge clk_bufg) begin
+  reset_cnt <= reset_cnt + !resetn;
+end
 
-  wire        iomem_valid;
-  reg         iomem_ready;
-  wire [ 3:0] iomem_wstrb;
-  wire [31:0] iomem_addr;
-  wire [31:0] iomem_wdata;
-  reg  [31:0] iomem_rdata;
+// PicoSoC bus
+wire        iomem_valid;
+reg         iomem_ready;
+wire [ 3:0] iomem_wstrb;
+wire [31:0] iomem_addr;
+wire [31:0] iomem_wdata;
+reg  [31:0] iomem_rdata;
 
-  reg  [31:0] gpio;
+// GPIO registers (LEDs)
+reg  [31:0] gpio;
 
-  assign led = gpio[3:0];
+// LEDs: solo los 4 LSB
+assign led = gpio[3:0];
 
-  always @(posedge clk_bufg) begin
-    if (!resetn) begin
-      gpio <= 0;
-    end else begin
-      iomem_ready <= 0;
-      if (iomem_valid && !iomem_ready && iomem_addr[31:24] == 8'h03) begin
-        iomem_ready <= 1;
-        iomem_rdata <= {4{sw, gpio[3:0]}};
-        if (iomem_wstrb[0]) gpio[7:0] <= iomem_wdata[7:0];
-        if (iomem_wstrb[1]) gpio[15:8] <= iomem_wdata[15:8];
-        if (iomem_wstrb[2]) gpio[23:16] <= iomem_wdata[23:16];
-        if (iomem_wstrb[3]) gpio[31:24] <= iomem_wdata[31:24];
-      end
+// ------------------------------
+// Memory-mapped I/O block
+//   0x03000000 → LEDs (RW)
+//   0x03000004 → Switches (RO)
+// ------------------------------
+always @(posedge clk_bufg) begin
+  if (!resetn) begin
+    gpio <= 32'b0;
+    iomem_ready <= 1'b0;
+  end else begin
+    iomem_ready <= 1'b0;
+
+    if (iomem_valid && !iomem_ready && iomem_addr[31:24] == 8'h03) begin
+      iomem_ready <= 1'b1;
+
+      case (iomem_addr[7:0])
+
+        // --------------------
+        // 0x03000000 → LEDs OUT
+        // --------------------
+        8'h00: begin
+          iomem_rdata <= gpio;   // lectura GPIO (opcional)
+          if (iomem_wstrb[0]) gpio[7:0]   <= iomem_wdata[7:0];
+          if (iomem_wstrb[1]) gpio[15:8]  <= iomem_wdata[15:8];
+          if (iomem_wstrb[2]) gpio[23:16] <= iomem_wdata[23:16];
+          if (iomem_wstrb[3]) gpio[31:24] <= iomem_wdata[31:24];
+        end
+
+        // --------------------
+        // 0x03000004 → Switches IN
+        // --------------------
+        8'h04: begin
+          iomem_rdata <= {28'b0, sw};  // switches en bits [3:0]
+        end
+
+        default: begin
+          iomem_rdata <= 32'b0;
+        end
+
+      endcase
     end
   end
+end
 
-  picosoc_noflash soc (
-      .clk   (clk_bufg),
-      .resetn(resetn),
+// Instantiate PicoSoC + PicoRV32 CPU
+picosoc_noflash soc (
+    .clk   (clk_bufg),
+    .resetn(resetn),
 
-      .ser_tx(tx),
-      .ser_rx(rx),
+    .ser_tx(tx),
+    .ser_rx(rx),
 
-      .irq_5(1'b0),
-      .irq_6(1'b0),
-      .irq_7(1'b0),
+    .irq_5(1'b0),
+    .irq_6(1'b0),
+    .irq_7(1'b0),
 
-      .iomem_valid(iomem_valid),
-      .iomem_ready(iomem_ready),
-      .iomem_wstrb(iomem_wstrb),
-      .iomem_addr (iomem_addr),
-      .iomem_wdata(iomem_wdata),
-      .iomem_rdata(iomem_rdata)
-  );
+    .iomem_valid(iomem_valid),
+    .iomem_ready(iomem_ready),
+    .iomem_wstrb(iomem_wstrb),
+    .iomem_addr (iomem_addr),
+    .iomem_wdata(iomem_wdata),
+    .iomem_rdata(iomem_rdata)
+);
 
 endmodule
 
+// Simple clock passthrough
 module bufg_opt (
-	input dat_in,
-	output reg dat_out
+input dat_in,
+output reg dat_out
 );
-
-	always @* begin
-		dat_out <= dat_in;
-	end
+always @* begin
+  dat_out <= dat_in;
+end
 endmodule
