@@ -20,39 +20,39 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define reg_leds (*(volatile uint32_t*)0x03000000)
+#define reg_leds     (*(volatile uint32_t*)0x03000000)
+#define reg_switches (*(volatile uint32_t*)0x03000004)
 
-// --------------------------------------------------------
-
-/* Private functions */
-static void led_counter(void);
-
-#define LED_DELAY   162338  // Equivalent to 0.125 secs
+#define LED_DELAY   162338
 static uint32_t delay = LED_DELAY;
+
+static void led_counter(void);
 
 void main()
 {
-	reg_leds = 0x0;
+    reg_leds = 0x00;
 
-	while (1)
-	{
-		led_counter();
-	}
-}
-
-static void led_counter(void)
-{
-
-    delay--;
-
-    if(delay == 0)
+    while (1)
     {
-        delay = LED_DELAY;
-        
-        reg_leds = reg_leds + 1;
-        if (reg_leds == 0x10)
-        {
-            reg_leds = 0;
-        }
+        uint32_t sw = reg_switches;
+
+        reg_leds = sw;
+
+        // led_counter();
     }
 }
+
+// static void led_counter(void)
+// {
+//     delay--;
+
+//     if (delay == 0)
+//     {
+//         delay = LED_DELAY;
+
+//         reg_leds++;
+
+//         if (reg_leds == 0x100)   
+//             reg_leds = 0;
+//     }
+// }
