@@ -1,4 +1,4 @@
-current_dir := ${CURDIR}
+current_dir := $(CURDIR)
 TOP := top
 SOURCES := ${current_dir}/picosoc_noflash.v \
            ${current_dir}/picorv32.v \
@@ -7,17 +7,17 @@ SOURCES := ${current_dir}/picosoc_noflash.v \
 
 SIM_SOURCES := ${current_dir}/arty_tb.cpp
 
-CROSS=riscv64-unknown-elf-
+CROSS=riscv-none-elf-
 
 SDC := ${current_dir}/picosoc.sdc
 
 ifeq ($(TARGET), cycloneiv)
-  SOURCES += ${current_dir}/top.v   
+  SOURCES += ${current_dir}/top.v
   QSF := ${current_dir}/top.qsf
-  QUARTUS := 1   
+  QUARTUS := 1
 else ifeq ($(TARGET), max10)
-  SOURCES += ${current_dir}/top.v   
-  QSF := ${current_dir}/top.qsf  
+  SOURCES += ${current_dir}/top.v
+  QSF := ${current_dir}/top.qsf
   QUARTUS := 1
 else ifeq ($(TARGET),arty_35)
   SOURCES += ${current_dir}/arty.v
@@ -32,7 +32,6 @@ else
   SOURCES += ${current_dir}/basys3.v
   PCF := ${current_dir}/basys3.pcf
 endif
-
 
 firmware: main.elf
 	$(CROSS)objcopy -O binary main.elf main.bin
@@ -64,7 +63,7 @@ QUARTUS_FIT := quartus_fit
 QUARTUS_ASM := quartus_asm
 QUARTUS_PGM := quartus_pgm
 
-build: map fit asm
+build: firmware map fit asm
 
 map:
 	$(QUARTUS_MAP) --read_settings_files=on --write_settings_files=off $(TOP)
@@ -102,7 +101,6 @@ else
 # ---------------------------------------------------
 # Flujo original con pcf (nextpnr)
 # ---------------------------------------------------
-
 
 flash:
 	openocd -f ${DIGILENT_CFG_DIR}/digilent_arty.cfg -c 'init; jtagspi_init 0 ${BSCAN_DIR}/bscan_spi_xc7a100t.bit; \

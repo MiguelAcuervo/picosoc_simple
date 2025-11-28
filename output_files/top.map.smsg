@@ -1,0 +1,23 @@
+Warning (10273): Verilog HDL warning at picorv32.v(283): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 283
+Warning (10273): Verilog HDL warning at picorv32.v(303): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 303
+Warning (10273): Verilog HDL warning at picorv32.v(310): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 310
+Warning (10273): Verilog HDL warning at picorv32.v(369): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 369
+Warning (10273): Verilog HDL warning at picorv32.v(371): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 371
+Warning (10273): Verilog HDL warning at picorv32.v(1019): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1019
+Warning (10273): Verilog HDL warning at picorv32.v(1228): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1228
+Warning (10273): Verilog HDL warning at picorv32.v(1245): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1245
+Warning (10273): Verilog HDL warning at picorv32.v(1289): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1289
+Warning (10273): Verilog HDL warning at picorv32.v(1360): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1360
+Warning (10273): Verilog HDL warning at picorv32.v(1376): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1376
+Warning (10273): Verilog HDL warning at picorv32.v(1377): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1377
+Warning (10273): Verilog HDL warning at picorv32.v(1389): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1389
+Warning (10273): Verilog HDL warning at picorv32.v(1390): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1390
+Warning (10273): Verilog HDL warning at picorv32.v(1408): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1408
+Warning (10273): Verilog HDL warning at picorv32.v(1409): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1409
+Warning (10273): Verilog HDL warning at picorv32.v(1412): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1412
+Warning (10273): Verilog HDL warning at picorv32.v(1433): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1433
+Warning (10273): Verilog HDL warning at picorv32.v(1558): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1558
+Warning (10273): Verilog HDL warning at picorv32.v(1559): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1559
+Warning (10273): Verilog HDL warning at picorv32.v(1945): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1945
+Warning (10268): Verilog HDL information at picorv32.v(1374): always construct contains both blocking and non-blocking assignments File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 1374
+Warning (10273): Verilog HDL warning at picorv32.v(2395): extended using "x" or "z" File: C:/msys64/home/migue/picosoc_simple/picorv32.v Line: 2395

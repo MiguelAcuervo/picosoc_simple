@@ -1,0 +1,81 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00100000         0x00000200         xr
+RAM              0x00000000         0x00000080         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x00100000      0x164
+                0x00100000                        . = ALIGN (0x4)
+ *(.text)
+ .text          0x00100000       0xd4 C:\msys64\tmp\ccMrdqPk.o
+ .text          0x001000d4       0x90 C:\msys64\tmp\ccoLt28G.o
+                0x001000d4                main
+ *(.text*)
+ *(.rodata)
+ *(.rodata*)
+ *(.srodata)
+ *(.srodata*)
+                0x00100164                        . = ALIGN (0x4)
+                0x00100164                        _etext = .
+                0x00100164                        _sidata = _etext
+
+.rela.dyn       0x00100164        0x0
+ .rela.text     0x00100164        0x0 C:\msys64\tmp\ccMrdqPk.o
+
+.data           0x00000000        0x4 load address 0x00100164
+                0x00000000                        . = ALIGN (0x4)
+                0x00000000                        _sdata = .
+                0x00000000                        _ram_start = .
+                0x00000000                        . = ALIGN (0x4)
+ *(.data)
+ .data          0x00000000        0x0 C:\msys64\tmp\ccMrdqPk.o
+ .data          0x00000000        0x0 C:\msys64\tmp\ccoLt28G.o
+ *(.data*)
+ *(.sdata)
+ .sdata         0x00000000        0x4 C:\msys64\tmp\ccoLt28G.o
+ *(.sdata*)
+                0x00000004                        . = ALIGN (0x4)
+                0x00000004                        _edata = .
+
+.bss            0x00000004        0x0 load address 0x00100168
+                0x00000004                        . = ALIGN (0x4)
+                0x00000004                        _sbss = .
+ *(.bss)
+ .bss           0x00000004        0x0 C:\msys64\tmp\ccMrdqPk.o
+ .bss           0x00000004        0x0 C:\msys64\tmp\ccoLt28G.o
+ *(.bss*)
+ *(.sbss)
+ *(.sbss*)
+ *(COMMON)
+                0x00000004                        . = ALIGN (0x4)
+                0x00000004                        _ebss = .
+
+.heap           0x00000004        0x0
+                0x00000004                        . = ALIGN (0x4)
+                0x00000004                        _heap_start = .
+LOAD C:\msys64\tmp\ccMrdqPk.o
+LOAD C:\msys64\tmp\ccoLt28G.o
+OUTPUT(main.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x00000000       0x2a
+ .riscv.attributes
+                0x00000000       0x28 C:\msys64\tmp\ccMrdqPk.o
+ .riscv.attributes
+                0x00000028       0x2a C:\msys64\tmp\ccoLt28G.o
+
+.comment        0x00000000       0x33
+ .comment       0x00000000       0x33 C:\msys64\tmp\ccoLt28G.o
+                                 0x34 (size before relaxing)
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 C:\msys64\tmp\ccoLt28G.o
